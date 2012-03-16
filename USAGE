@@ -1,1 +1,27 @@
 
+
+Example usage:
+
+    <project ...>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.carlspring.maven</groupId>
+                    <artifactId>derby-maven-plugin</artifactId>
+                    <version>1.0</version>
+
+                    <executions>
+                        <execution>
+                            <id>start-derby</id>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>start</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+
+                </plugin>
+            </plugins>
+        </build>
+    </project>
+

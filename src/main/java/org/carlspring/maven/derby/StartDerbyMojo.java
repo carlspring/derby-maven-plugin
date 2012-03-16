@@ -32,6 +32,11 @@ public class StartDerbyMojo
         extends AbstractDerbyMojo
 {
 
+    /**
+     * @parameter expression="${derby.debug}" default-value="true"
+     */
+    boolean debugStatements;
+
 
     @Override
     public void execute()
@@ -40,6 +45,9 @@ public class StartDerbyMojo
         try
         {
             System.setProperty("derby.system.home", getBasedir() + "/target/derby");
+
+            if (debugStatements)
+                System.setProperty("derby.language.logStatementText", "true");
 
             NetworkServerControl server = new NetworkServerControl(InetAddress.getLocalHost(),
                                                                    getPort(),
