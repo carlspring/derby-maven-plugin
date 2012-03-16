@@ -1,0 +1,4 @@
+
+
+This is a simple Maven plugin to start/stop a Derby database during a Maven build.
+
