@@ -79,6 +79,8 @@ public class StartDerbyMojo
             else
             {
                 getLog().info("Derby ping-pong: [FAILED]");
+                throw new MojoFailureException("Failed to start the NetworkServerControl." +
+                                               " The server did not respond with a pong withing 60 seconds.");
             }
         }
         catch (Exception e)
