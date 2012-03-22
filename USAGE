@@ -17,6 +17,13 @@ Example usage:
                             <goals>
                                 <goal>start</goal>
                             </goals>
+
+                            <configuration>
+                                <!-- Optional, defaults to ${project.build.directory}/derby-->
+                                <derbyHome>${project.build.directory}/derby</derbyHome>
+                                <!-- Optional, defaults to 1527 -->
+                                <port>1527</port>
+                            </configuration>
                         </execution>
                     </executions>
 

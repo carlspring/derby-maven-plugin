@@ -44,16 +44,42 @@ public class StartDerbyMojo
     {
         try
         {
-            System.setProperty("derby.system.home", getBasedir() + "/target/derby");
+            System.setProperty("derby.system.home", getDerbyHome());
 
-            if (debugStatements)
-                System.setProperty("derby.language.logStatementText", "true");
+            System.setProperty("derby.language.logStatementText", String.valueOf(debugStatements));
 
             NetworkServerControl server = new NetworkServerControl(InetAddress.getLocalHost(),
                                                                    getPort(),
                                                                    getUsername(),
                                                                    getPassword());
             server.start(new PrintWriter(System.out));
+
+            long maxSleepTime = 60000;
+            long sleepTime = 0;
+            boolean pong = false;
+
+            while (!pong && sleepTime < maxSleepTime)
+            {
+                try
+                {
+                    server.ping();
+                    pong = true;
+                }
+                catch (Exception e)
+                {
+                    sleepTime += 1000;
+                    Thread.sleep(1000);
+                }
+            }
+
+            if (pong)
+            {
+                getLog().info("Derby ping-pong: [OK]");
+            }
+            else
+            {
+                getLog().info("Derby ping-pong: [FAILED]");
+            }
         }
         catch (Exception e)
         {

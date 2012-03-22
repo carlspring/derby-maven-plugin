@@ -34,13 +34,13 @@ public abstract class AbstractDerbyMojo
     public MavenProject project;
 
     /**
-     * The target directory where fas is installed and where the capture should be extracted
-     *
      * @parameter expression="${basedir}"
      */
     public String basedir;
 
     /**
+     * The port to start Derby on.
+     *
      * @parameter expression="${derby.port}"
      */
     int port;
@@ -69,6 +69,11 @@ public abstract class AbstractDerbyMojo
      * @parameter expression="${derby.url.shutdown}"
      */
     String connectionURLShutdown;
+
+    /**
+     * @parameter expression="${derby.home}" default-value="${project.build.directory}/derby"
+     */
+    String derbyHome;
 
 
     public MavenProject getProject()
@@ -149,6 +154,16 @@ public abstract class AbstractDerbyMojo
     public void setBasedir(String basedir)
     {
         this.basedir = basedir;
+    }
+
+    public String getDerbyHome()
+    {
+        return derbyHome;
+    }
+
+    public void setDerbyHome(String derbyHome)
+    {
+        this.derbyHome = derbyHome;
     }
 
 }
