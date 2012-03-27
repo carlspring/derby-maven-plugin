@@ -21,7 +21,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.PrintWriter;
+import java.net.BindException;
 import java.net.InetAddress;
+import java.net.SocketException;
 
 /**
  * @author mtodorov
@@ -37,6 +39,11 @@ public class StartDerbyMojo
      */
     boolean debugStatements;
 
+    /**
+     * @parameter expression="${derby.fail.if.already.running}" default-value="true"
+     */
+    boolean failIfAlreadyRunning;
+
 
     @Override
     public void execute()
@@ -48,45 +55,91 @@ public class StartDerbyMojo
 
             System.setProperty("derby.language.logStatementText", String.valueOf(debugStatements));
 
-            NetworkServerControl server = new NetworkServerControl(InetAddress.getLocalHost(),
-                                                                   getPort(),
-                                                                   getUsername(),
-                                                                   getPassword());
-            server.start(new PrintWriter(System.out));
+            NetworkServerControl server = null;
 
-            long maxSleepTime = 60000;
-            long sleepTime = 0;
-            boolean pong = false;
-
-            while (!pong && sleepTime < maxSleepTime)
+            try
             {
-                try
+                server = new NetworkServerControl(InetAddress.getLocalHost(),
+                                                                       getPort(),
+                                                                       getUsername(),
+                                                                       getPassword());
+                server.start(new PrintWriter(System.out));
+            }
+            catch (Exception e)
+            {
+                if (e instanceof BindException)
                 {
-                    server.ping();
-                    pong = true;
-                }
-                catch (Exception e)
-                {
-                    sleepTime += 1000;
-                    Thread.sleep(1000);
+                    if (failIfAlreadyRunning)
+                    {
+                        throw new MojoExecutionException("Failed to start the Derby server!", e);
+                    }
+                    else
+                    {
+                        getLog().info("Derby is already running.");
+                    }
                 }
             }
 
-            if (pong)
+            if (server != null)
             {
-                getLog().info("Derby ping-pong: [OK]");
+                long maxSleepTime = 60000;
+                long sleepTime = 0;
+                boolean pong = false;
+
+                while (!pong && sleepTime < maxSleepTime)
+                {
+                    try
+                    {
+                        server.ping();
+                        pong = true;
+                    }
+                    catch (Exception e)
+                    {
+                        sleepTime += 1000;
+                        Thread.sleep(1000);
+                    }
+                }
+
+                if (pong)
+                {
+                    getLog().info("Derby ping-pong: [OK]");
+                }
+                else
+                {
+                    getLog().info("Derby ping-pong: [FAILED]");
+                    throw new MojoFailureException("Failed to start the NetworkServerControl." +
+                                                   " The server did not respond with a pong withing 60 seconds.");
+                }
             }
             else
             {
-                getLog().info("Derby ping-pong: [FAILED]");
-                throw new MojoFailureException("Failed to start the NetworkServerControl." +
-                                               " The server did not respond with a pong withing 60 seconds.");
+                throw new MojoExecutionException("Failed to start the Derby server!");
             }
         }
         catch (Exception e)
         {
             throw new MojoExecutionException(e.getMessage(), e);
         }
+    }
+
+    public boolean isDebugStatements()
+    {
+        return debugStatements;
+    }
+
+    public void setDebugStatements(boolean debugStatements)
+    {
+        this.debugStatements = debugStatements;
+    }
+
+    public boolean isFailIfAlreadyRunning()
+    {
+        return failIfAlreadyRunning;
+    }
+
+    public void setFailIfAlreadyRunning(boolean failIfAlreadyRunning)
+    {
+        this.failIfAlreadyRunning = failIfAlreadyRunning;
     }
 
 }
