@@ -23,7 +23,6 @@ import org.apache.maven.plugin.MojoFailureException;
 import java.io.PrintWriter;
 import java.net.BindException;
 import java.net.InetAddress;
-import java.net.SocketException;
 
 /**
  * @author mtodorov
@@ -59,10 +58,12 @@ public class StartDerbyMojo
 
             try
             {
-                server = new NetworkServerControl(InetAddress.getLocalHost(),
-                                                                       getPort(),
-                                                                       getUsername(),
-                                                                       getPassword());
+                final InetAddress localHost = InetAddress.getByAddress("localhost", new byte[]{127, 0, 0, 1});
+
+                server = new NetworkServerControl(localHost,
+                                                  getPort(),
+                                                  getUsername(),
+                                                  getPassword());
                 server.start(new PrintWriter(System.out));
             }
             catch (Exception e)
@@ -71,12 +72,16 @@ public class StartDerbyMojo
                 {
                     if (failIfAlreadyRunning)
                     {
-                        throw new MojoExecutionException("Failed to start the Derby server!", e);
+                        throw new MojoExecutionException("Failed to start the Derby server, port already open!", e);
                     }
                     else
                     {
                         getLog().info("Derby is already running.");
                     }
+                }
+                else
+                {
+                    throw new MojoExecutionException(e.getMessage(), e);
                 }
             }
 
