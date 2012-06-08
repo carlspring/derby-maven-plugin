@@ -16,53 +16,42 @@ package org.carlspring.maven.derby;
  * limitations under the License.
  */
 
-import org.apache.derby.drda.NetworkServerControl;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import java.io.PrintWriter;
-import java.net.BindException;
-import java.net.InetAddress;
-import java.sql.DriverManager;
-
 /**
- * @author mtodorov
- * @goal stop
+ * Runs the Derby server, blocking until the server no longer responds to pings.
+ *
+ * @author kphonik
+ * @goal run
  * @requiresProject false
  */
-public class StopDerbyMojo
-        extends AbstractDerbyMojo {
-
+public class RunDerbyMojo
+        extends StartDerbyMojo {
 
     @Override
     public void doExecute()
             throws MojoExecutionException, MojoFailureException {
-
         try {
 
-            try {
-                server.ping();
-            } catch (Exception e) {
-                getLog().error("Derby server was already stopped.");
-                return;
-            }
-
-            server.shutdown();
+            super.doExecute();
+            getLog().info("Blocking to wait for connections, use the @stop goal to kill.");
 
             while (true) {
-                Thread.sleep(1000);
                 try {
                     server.ping();
                 } catch (Exception e) {
-                    getLog().info("Derby server seems to have stopped. Cheers!");
+                    getLog().info("Derby server is not responding to pings, exiting ...");
                     return;
                 }
+                Thread.sleep(1000);
             }
 
+        } catch (InterruptedException e) {
+            getLog().info("Server polling thread was killed, you should use the @stop goal instead.");
         } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
-
     }
 
 }
