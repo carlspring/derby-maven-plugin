@@ -34,36 +34,19 @@ public class StartDerbyMojo
 {
 
     /**
-     * @parameter expression="${derby.debug}" default-value="true"
-     */
-    boolean debugStatements;
-
-    /**
      * @parameter expression="${derby.fail.if.already.running}" default-value="true"
      */
     boolean failIfAlreadyRunning;
 
-
     @Override
-    public void execute()
+    public void doExecute()
             throws MojoExecutionException, MojoFailureException
     {
         try
         {
-            System.setProperty("derby.system.home", getDerbyHome());
-
-            System.setProperty("derby.language.logStatementText", String.valueOf(debugStatements));
-
-            NetworkServerControl server = null;
-
             try
             {
-                final InetAddress localHost = InetAddress.getByAddress("localhost", new byte[]{127, 0, 0, 1});
-
-                server = new NetworkServerControl(localHost,
-                                                  getPort(),
-                                                  getUsername(),
-                                                  getPassword());
+                getLog().info("Starting the Derby server ...");
                 server.start(new PrintWriter(System.out));
             }
             catch (Exception e)
@@ -125,16 +108,6 @@ public class StartDerbyMojo
         {
             throw new MojoExecutionException(e.getMessage(), e);
         }
-    }
-
-    public boolean isDebugStatements()
-    {
-        return debugStatements;
-    }
-
-    public void setDebugStatements(boolean debugStatements)
-    {
-        this.debugStatements = debugStatements;
     }
 
     public boolean isFailIfAlreadyRunning()

@@ -16,8 +16,13 @@ package org.carlspring.maven.derby;
  * limitations under the License.
  */
 
+import org.apache.derby.drda.NetworkServerControl;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+
+import java.net.InetAddress;
 
 /**
  * @author mtodorov
@@ -75,6 +80,38 @@ public abstract class AbstractDerbyMojo
      */
     String derbyHome;
 
+    /**
+     * @parameter expression="${derby.debug}" default-value="true"
+     */
+    boolean debugStatements;
+
+    protected NetworkServerControl server;
+
+    @Override
+    public final void execute() throws MojoExecutionException, MojoFailureException {
+
+        System.setProperty("derby.system.home", getDerbyHome());
+        System.setProperty("derby.language.logStatementText", String.valueOf(debugStatements));
+
+        try {
+
+            final InetAddress localHost = InetAddress.getByAddress("localhost", new byte[]{127, 0, 0, 1});
+            getLog().info("Initializing Derby server control for " + localHost);
+
+            server = new NetworkServerControl(localHost,
+                    getPort(),
+                    getUsername(),
+                    getPassword());
+
+        } catch (Exception e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        }
+
+        doExecute();
+
+    }
+
+    protected abstract void doExecute() throws MojoExecutionException, MojoFailureException;
 
     public MavenProject getProject()
     {
@@ -164,6 +201,16 @@ public abstract class AbstractDerbyMojo
     public void setDerbyHome(String derbyHome)
     {
         this.derbyHome = derbyHome;
+    }
+
+    public boolean isDebugStatements()
+    {
+        return debugStatements;
+    }
+
+    public void setDebugStatements(boolean debugStatements)
+    {
+        this.debugStatements = debugStatements;
     }
 
 }
