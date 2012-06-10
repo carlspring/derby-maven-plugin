@@ -16,14 +16,8 @@ package org.carlspring.maven.derby;
  * limitations under the License.
  */
 
-import org.apache.derby.drda.NetworkServerControl;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-
-import java.io.PrintWriter;
-import java.net.BindException;
-import java.net.InetAddress;
-import java.sql.DriverManager;
 
 /**
  * @author mtodorov
@@ -31,35 +25,47 @@ import java.sql.DriverManager;
  * @requiresProject false
  */
 public class StopDerbyMojo
-        extends AbstractDerbyMojo {
+        extends AbstractDerbyMojo
+{
 
 
     @Override
     public void doExecute()
-            throws MojoExecutionException, MojoFailureException {
+            throws MojoExecutionException, MojoFailureException
+    {
 
-        try {
+        try
+        {
 
-            try {
+            try
+            {
                 server.ping();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 getLog().error("Derby server was already stopped.");
                 return;
             }
 
             server.shutdown();
 
-            while (true) {
+            while (true)
+            {
                 Thread.sleep(1000);
-                try {
+                try
+                {
                     server.ping();
-                } catch (Exception e) {
-                    getLog().info("Derby server seems to have stopped. Cheers!");
+                }
+                catch (Exception e)
+                {
+                    getLog().info("Derby server has been stopped!");
                     return;
                 }
             }
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 

@@ -27,29 +27,40 @@ import org.apache.maven.plugin.MojoFailureException;
  * @requiresProject false
  */
 public class RunDerbyMojo
-        extends StartDerbyMojo {
+        extends StartDerbyMojo
+{
 
     @Override
     public void doExecute()
-            throws MojoExecutionException, MojoFailureException {
-        try {
+            throws MojoExecutionException, MojoFailureException
+    {
+        try
+        {
 
             super.doExecute();
             getLog().info("Blocking to wait for connections, use the @stop goal to kill.");
 
-            while (true) {
-                try {
+            while (true)
+            {
+                try
+                {
                     server.ping();
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     getLog().info("Derby server is not responding to pings, exiting ...");
                     return;
                 }
                 Thread.sleep(1000);
             }
 
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e)
+        {
             getLog().info("Server polling thread was killed, you should use the @stop goal instead.");
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             throw new MojoExecutionException(e.getMessage(), e);
         }
     }

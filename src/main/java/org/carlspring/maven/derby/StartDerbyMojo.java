@@ -16,17 +16,15 @@ package org.carlspring.maven.derby;
  * limitations under the License.
  */
 
-import org.apache.derby.drda.NetworkServerControl;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.PrintWriter;
 import java.net.BindException;
-import java.net.InetAddress;
 
 /**
  * @author mtodorov
- * @goal            start
+ * @goal start
  * @requiresProject false
  */
 public class StartDerbyMojo
