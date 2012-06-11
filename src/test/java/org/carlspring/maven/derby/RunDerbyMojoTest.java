@@ -58,8 +58,8 @@ public class RunDerbyMojoTest
         stopMojo.execute();
 
         Thread.sleep(3000);
-        rt.isAlive();
         Assert.assertTrue("Running thread does not report ended.", rt.ended);
+        Assert.assertFalse(rt.isAlive());
 
     }
 
