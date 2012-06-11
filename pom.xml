@@ -27,6 +27,10 @@
             <name>Martin Todorov</name>
             <email>carlspring@gmail.com</email>
         </developer>
+        <developer>
+            <name>Jason Stiefel</name>
+            <email>jason@stiefel.io</email>
+        </developer>
     </developers>
 
     <properties>
