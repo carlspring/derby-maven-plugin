@@ -35,28 +35,36 @@ public class StopDerbyMojo
     public void doExecute()
             throws MojoExecutionException, MojoFailureException
     {
-        try {
-
-            try {
+        try
+        {
+            try
+            {
                 server.ping();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 getLog().error("Derby server was already stopped.");
                 return;
             }
 
             server.shutdown();
 
-            while (true) {
+            while (true)
+            {
                 Thread.sleep(1000);
-                try {
+                try
+                {
                     server.ping();
-                } catch (Exception e) {
-                    getLog().info("Derby server seems to have stopped. Cheers!");
+                }
+                catch (Exception e)
+                {
+                    getLog().info("Derby has stopped!");
                     return;
                 }
             }
-
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             throw new MojoExecutionException(e.getMessage(), e);
         }
     }

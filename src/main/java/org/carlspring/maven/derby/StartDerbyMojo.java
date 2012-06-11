@@ -126,5 +126,4 @@ public class StartDerbyMojo
         this.failIfAlreadyRunning = failIfAlreadyRunning;
     }
 
-
 }

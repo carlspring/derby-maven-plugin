@@ -25,6 +25,7 @@ import org.apache.maven.project.MavenProject;
 import java.net.InetAddress;
 
 /**
+ * @author Jason Stiefel (jason@stiefel.io)
  * @author mtodorov
  */
 public abstract class AbstractDerbyMojo
@@ -98,22 +99,27 @@ public abstract class AbstractDerbyMojo
      * @throws MojoFailureException
      */
     @Override
-    public final void execute() throws MojoExecutionException, MojoFailureException {
+    public final void execute()
+            throws MojoExecutionException, MojoFailureException
+    {
 
         System.setProperty("derby.system.home", getDerbyHome());
         System.setProperty("derby.language.logStatementText", String.valueOf(debugStatements));
 
-        try {
+        try
+        {
 
             final InetAddress localHost = InetAddress.getByAddress("localhost", new byte[]{127, 0, 0, 1});
             getLog().info("Initializing Derby server control for " + localHost);
 
             server = new NetworkServerControl(localHost,
-                    getPort(),
-                    getUsername(),
-                    getPassword());
+                                              getPort(),
+                                              getUsername(),
+                                              getPassword());
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 
