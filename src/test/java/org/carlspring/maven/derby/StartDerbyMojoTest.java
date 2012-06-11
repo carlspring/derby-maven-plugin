@@ -28,6 +28,7 @@ public class StartDerbyMojoTest
 {
 
     StartDerbyMojo mojo;
+    StopDerbyMojo stopMojo;
 
     protected void setUp()
             throws Exception
@@ -36,12 +37,18 @@ public class StartDerbyMojoTest
 
         mojo = (StartDerbyMojo) lookupMojo("start", POM_PLUGIN);
         configureMojo(mojo);
+        stopMojo = (StopDerbyMojo) lookupMojo("stop", POM_PLUGIN);
+        configureMojo(stopMojo);
     }
 
     public void testMojo()
-            throws MojoExecutionException, MojoFailureException
+            throws MojoExecutionException, MojoFailureException, InterruptedException
     {
         mojo.execute();
+
+        Thread.sleep(5000);
+
+        stopMojo.execute();
     }
 
 }
