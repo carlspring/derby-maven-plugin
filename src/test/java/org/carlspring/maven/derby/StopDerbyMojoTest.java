@@ -16,32 +16,42 @@ package org.carlspring.maven.derby;
  * limitations under the License.
  */
 
+import junit.framework.Assert;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 /**
- * @author mtodorov
+ * @author Jason Stiefel (jason@stiefel.io)
  */
-public class StartDerbyMojoTest
+public class StopDerbyMojoTest
         extends AbstractDerbyMojoTest
 {
 
-    StartDerbyMojo mojo;
+    StopDerbyMojo stopMojo;
 
     protected void setUp()
             throws Exception
     {
         super.setUp();
 
-        mojo = (StartDerbyMojo) lookupMojo("start", POM_PLUGIN);
-        configureMojo(mojo);
+        stopMojo = (StopDerbyMojo) lookupMojo("stop", POM_PLUGIN);
+        configureMojo(stopMojo);
+        stopMojo.setFailIfNotRunning(true);
+
     }
 
     public void testMojo()
-            throws MojoExecutionException, MojoFailureException
+            throws Exception
     {
-        mojo.execute();
+        try
+        {
+            stopMojo.execute();
+            Assert.fail("The failIfNotRunning attribute did not cause an exception as expected");
+        }
+        catch (MojoExecutionException e)
+        {
+            // Cool beans
+        }
     }
 
 }
