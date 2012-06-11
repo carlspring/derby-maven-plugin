@@ -32,17 +32,31 @@ public class StopDerbyMojo
 
 
     @Override
-    public void execute()
+    public void doExecute()
             throws MojoExecutionException, MojoFailureException
     {
-        try
-        {
-            Class.forName(getDriver());
+        try {
 
-            DriverManager.getConnection(getConnectionURLShutdown()).close();
-        }
-        catch (Exception e)
-        {
+            try {
+                server.ping();
+            } catch (Exception e) {
+                getLog().error("Derby server was already stopped.");
+                return;
+            }
+
+            server.shutdown();
+
+            while (true) {
+                Thread.sleep(1000);
+                try {
+                    server.ping();
+                } catch (Exception e) {
+                    getLog().info("Derby server seems to have stopped. Cheers!");
+                    return;
+                }
+            }
+
+        } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
     }
