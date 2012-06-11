@@ -99,7 +99,7 @@ public abstract class AbstractDerbyMojo
      * @throws MojoFailureException
      */
     @Override
-    public final void execute()
+    public void execute()
             throws MojoExecutionException, MojoFailureException
     {
         setupDerby();
