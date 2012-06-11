@@ -17,17 +17,16 @@ package org.carlspring.maven.derby;
  */
 
 import junit.framework.Assert;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 /**
  * @author Jason Stiefel (jason@stiefel.io)
  */
 public class RunDerbyMojoTest
-        extends AbstractDerbyMojoTest {
+        extends AbstractDerbyMojoTest
+{
 
     RunDerbyMojo runMojo;
+
     StopDerbyMojo stopMojo;
 
 
@@ -41,7 +40,6 @@ public class RunDerbyMojoTest
         stopMojo = (StopDerbyMojo) lookupMojo("stop", POM_PLUGIN);
         configureMojo(stopMojo);
         stopMojo.setFailIfNotRunning(true);
-
     }
 
     public void testMojo()
@@ -89,4 +87,5 @@ public class RunDerbyMojoTest
             }
         }
     }
+
 }
