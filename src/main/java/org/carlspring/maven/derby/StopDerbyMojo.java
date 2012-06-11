@@ -30,6 +30,10 @@ public class StopDerbyMojo
         extends AbstractDerbyMojo
 {
 
+    /**
+     * @parameter expression="${derby.fail.if.already.running}" default-value="true"
+     */
+    boolean failIfNotRunning;
 
     @Override
     public void doExecute()
@@ -43,6 +47,10 @@ public class StopDerbyMojo
             }
             catch (Exception e)
             {
+                if (failIfNotRunning) {
+                    throw new MojoExecutionException("Failed to stop the Derby server, no server running!", e);
+                }
+
                 getLog().error("Derby server was already stopped.");
                 return;
             }
@@ -67,6 +75,14 @@ public class StopDerbyMojo
         {
             throw new MojoExecutionException(e.getMessage(), e);
         }
+    }
+
+    public boolean isFailIfNotRunning() {
+        return failIfNotRunning;
+    }
+
+    public void setFailIfNotRunning(boolean failIfNotRunning) {
+        this.failIfNotRunning = failIfNotRunning;
     }
 
 }
