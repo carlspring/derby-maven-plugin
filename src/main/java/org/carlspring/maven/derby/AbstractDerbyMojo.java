@@ -102,13 +102,19 @@ public abstract class AbstractDerbyMojo
     public final void execute()
             throws MojoExecutionException, MojoFailureException
     {
+        setupDerby();
 
+        doExecute();
+    }
+
+    protected void setupDerby()
+            throws MojoExecutionException
+    {
         System.setProperty("derby.system.home", getDerbyHome());
         System.setProperty("derby.language.logStatementText", String.valueOf(debugStatements));
 
         try
         {
-
             final InetAddress localHost = InetAddress.getByAddress("localhost", new byte[]{127, 0, 0, 1});
             getLog().info("Initializing Derby server control for " + localHost);
 
@@ -116,15 +122,11 @@ public abstract class AbstractDerbyMojo
                                               getPort(),
                                               getUsername(),
                                               getPassword());
-
         }
         catch (Exception e)
         {
             throw new MojoExecutionException(e.getMessage(), e);
         }
-
-        doExecute();
-
     }
 
     /**
