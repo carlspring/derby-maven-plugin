@@ -32,3 +32,42 @@ Example usage:
         </build>
     </project>
 
+Usage of the run goal, configure the plugin outside of the "execution" scope as outlined above:
+
+    <project ...>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.carlspring.maven</groupId>
+                    <artifactId>derby-maven-plugin</artifactId>
+                    <version>1.4</version>
+                    <configuration>
+                        <basedir>${project.build.directory}/derby</basedir>
+                        <port>1527</port>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>start-derby</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>start</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>stop-derby</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>stop</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </project>
+
+    # mvn derby:run
+    Will start your derby instance on port 1527 and block until you CTRL-C the process or use:
+
+    # mvn derby:stop
+    Sends a stop message to the configured server instance.
