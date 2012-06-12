@@ -19,8 +19,6 @@ package org.carlspring.maven.derby;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import java.sql.DriverManager;
-
 /**
  * @author mtodorov
  * @goal            stop
@@ -47,7 +45,8 @@ public class StopDerbyMojo
             }
             catch (Exception e)
             {
-                if (failIfNotRunning) {
+                if (failIfNotRunning)
+                {
                     throw new MojoExecutionException("Failed to stop the Derby server, no server running!", e);
                 }
 
@@ -77,11 +76,13 @@ public class StopDerbyMojo
         }
     }
 
-    public boolean isFailIfNotRunning() {
+    public boolean isFailIfNotRunning()
+    {
         return failIfNotRunning;
     }
 
-    public void setFailIfNotRunning(boolean failIfNotRunning) {
+    public void setFailIfNotRunning(boolean failIfNotRunning)
+    {
         this.failIfNotRunning = failIfNotRunning;
     }
 
