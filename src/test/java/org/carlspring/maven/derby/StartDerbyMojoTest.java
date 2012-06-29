@@ -18,7 +18,6 @@ package org.carlspring.maven.derby;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 /**
  * @author mtodorov
@@ -27,16 +26,18 @@ public class StartDerbyMojoTest
         extends AbstractDerbyMojoTest
 {
 
-    StartDerbyMojo mojo;
+    StartDerbyMojo startMojo;
     StopDerbyMojo stopMojo;
+
 
     protected void setUp()
             throws Exception
     {
         super.setUp();
 
-        mojo = (StartDerbyMojo) lookupMojo("start", POM_PLUGIN);
-        configureMojo(mojo);
+        startMojo = (StartDerbyMojo) lookupMojo("start", POM_PLUGIN);
+        configureMojo(startMojo);
+
         stopMojo = (StopDerbyMojo) lookupMojo("stop", POM_PLUGIN);
         configureMojo(stopMojo);
     }
@@ -44,7 +45,7 @@ public class StartDerbyMojoTest
     public void testMojo()
             throws MojoExecutionException, MojoFailureException, InterruptedException
     {
-        mojo.execute();
+        startMojo.execute();
 
         Thread.sleep(5000);
 

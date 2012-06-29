@@ -29,15 +29,17 @@ public class StopDerbyMojoTest
 
     StopDerbyMojo stopMojo;
 
+
     protected void setUp()
             throws Exception
     {
         super.setUp();
 
         stopMojo = (StopDerbyMojo) lookupMojo("stop", POM_PLUGIN);
-        configureMojo(stopMojo);
-        stopMojo.setFailIfNotRunning(true);
 
+        configureMojo(stopMojo);
+
+        stopMojo.setFailIfNotRunning(true);
     }
 
     public void testMojo()
