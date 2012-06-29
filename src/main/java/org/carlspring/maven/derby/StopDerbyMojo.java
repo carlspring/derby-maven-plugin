@@ -19,6 +19,9 @@ package org.carlspring.maven.derby;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 /**
  * @author mtodorov
  * @goal            stop
@@ -54,6 +57,18 @@ public class StopDerbyMojo
                 return;
             }
 
+            try
+            {
+                DriverManager.getConnection(getConnectionURL());
+                DriverManager.getConnection("jdbc:derby:;shutdown=true");
+            }
+            catch (SQLException e)
+            {
+                // Apparently this prints out a bunch of stuff we're not currently interested in,
+                // we just want it to shutdown properly.
+                // Perhaps further handling might be required at a future point in time.
+            }
+
             server.shutdown();
 
             while (true)
@@ -66,9 +81,11 @@ public class StopDerbyMojo
                 catch (Exception e)
                 {
                     getLog().info("Derby has stopped!");
-                    return;
+                    break;
                 }
             }
+
+            System.getProperties().remove("derby.system.home");
         }
         catch (Exception e)
         {
