@@ -18,23 +18,26 @@ package org.carlspring.maven.derby;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
  * @author mtodorov
- * @goal            stop
- * @requiresProject false
  */
+@Mojo(name = "stop", requiresProject = false)
 public class StopDerbyMojo
         extends AbstractDerbyMojo
 {
 
     /**
-     * @parameter expression="${derby.fail.if.already.running}" default-value="true"
+     * Whether to fail, if Derby is not running.
      */
+    @Parameter(property = "derby.fail.if.already.running", defaultValue = "true")
     boolean failIfNotRunning;
+
 
     @Override
     public void doExecute()

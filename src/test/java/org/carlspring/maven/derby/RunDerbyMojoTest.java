@@ -16,8 +16,6 @@ package org.carlspring.maven.derby;
  * limitations under the License.
  */
 
-import junit.framework.Assert;
-
 /**
  * @author Jason Stiefel (jason@stiefel.io)
  */
@@ -56,8 +54,8 @@ public class RunDerbyMojoTest
         stopMojo.execute();
 
         Thread.sleep(3000);
-        Assert.assertTrue("Running thread does not report ended.", rt.ended);
-        Assert.assertFalse(rt.isAlive());
+        assertTrue("Running thread does not report ended.", rt.ended);
+        assertFalse(rt.isAlive());
 
     }
 

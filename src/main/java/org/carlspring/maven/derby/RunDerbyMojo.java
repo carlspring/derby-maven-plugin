@@ -18,14 +18,14 @@ package org.carlspring.maven.derby;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
 
 /**
  * Runs the Derby server, blocking until the server no longer responds to pings.
  *
  * @author Jason Stiefel (jason@stiefel.io)
- * @goal run
- * @requiresProject false
  */
+@Mojo(name = "run", requiresProject = false)
 public class RunDerbyMojo
         extends StartDerbyMojo
 {

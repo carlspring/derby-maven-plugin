@@ -20,6 +20,7 @@ import org.apache.derby.drda.NetworkServerControl;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import java.net.InetAddress;
@@ -32,64 +33,65 @@ public abstract class AbstractDerbyMojo
         extends AbstractMojo
 {
 
-    /**
-     * @parameter default-value="${project}"
-     * @required
-     * @readonly
-     */
+    @Parameter(readonly = true, property = "project", required = true)
     public MavenProject project;
 
-    /**
-     * @parameter expression="${basedir}"
-     */
+    @Parameter(property = "basedir")
     public String basedir;
 
     /**
      * The port to start Derby on.
-     *
-     * @parameter expression="${derby.port}"
      */
+    @Parameter(property = "derby.port")
     int port;
 
     /**
-     * @parameter expression="${derby.username}" default-value="derby"
+     * The username to use when authenticating.
      */
+    @Parameter(property = "derby.username", defaultValue = "derby")
     String username;
 
     /**
-     * @parameter expression="${derby.password}" default-value="derby"
+     * The password to use when authenticating.
      */
+    @Parameter(property = "derby.password", defaultValue = "derby")
     String password;
 
     /**
-     * @parameter expression="${derby.driver}"
+     * The absolute class name of the driver.
      */
+    @Parameter(property = "derby.driver")
     String driver;
 
     /**
-     * @parameter expression="${derby.url}"
+     * The URL to use when connecting.
      */
+    @Parameter(property = "derby.url")
     String connectionURL;
 
     /**
-     * @parameter expression="${derby.url.shutdown}"
+     * The username to use when shutting down the database.
      */
+    @Parameter(property = "derby.url.shutdown")
     String connectionURLShutdown;
 
     /**
-     * @parameter expression="${derby.home}" default-value="${project.build.directory}/derby"
+     * The directory to place the derby files in.
      */
+    @Parameter(property = "derby.home", defaultValue = "${project.build.directory}/derby")
     String derbyHome;
 
     /**
-     * @parameter expression="${derby.debug}" default-value="true"
+     * Whether to run Derby with debugging statements.
      */
+    @Parameter(property = "derby.debug", defaultValue = "true")
     boolean debugStatements;
 
     /**
      * Shared {@link NetworkServerControl} instance for all mojos.
      */
     protected NetworkServerControl server;
+
 
     /**
      * Delegates the mojo execution to {@link #doExecute()} after initializing the {@link NetworkServerControl} for
@@ -115,7 +117,7 @@ public abstract class AbstractDerbyMojo
 
         try
         {
-            final InetAddress localHost = InetAddress.getByAddress("localhost", new byte[]{127, 0, 0, 1});
+            final InetAddress localHost = InetAddress.getByAddress("localhost", new byte[]{ 127, 0, 0, 1 });
             getLog().info("Initializing Derby server control for " + localHost);
 
             server = new NetworkServerControl(localHost,

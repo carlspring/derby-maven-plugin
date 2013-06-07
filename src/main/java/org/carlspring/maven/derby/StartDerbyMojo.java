@@ -16,31 +16,26 @@ package org.carlspring.maven.derby;
  * limitations under the License.
  */
 
-import org.apache.derby.drda.NetworkServerControl;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.PrintWriter;
 import java.net.BindException;
-import java.net.InetAddress;
 
 /**
  * @author mtodorov
- * @goal            start
- * @requiresProject false
  */
+@Mojo(name = "start", requiresProject = false)
 public class StartDerbyMojo
         extends AbstractDerbyMojo
 {
 
     /**
-     * @parameter expression="${derby.debug}" default-value="true"
+     * Whether to fail, if there's already something running on the port.
      */
-    boolean debugStatements;
-
-    /**
-     * @parameter expression="${derby.fail.if.already.running}" default-value="true"
-     */
+    @Parameter(property = "derby.fail.if.already.running", defaultValue = "true")
     boolean failIfAlreadyRunning;
 
 
