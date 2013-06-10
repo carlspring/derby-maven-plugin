@@ -1,4 +1,3 @@
-
 Example usage:
 
     <project ...>
@@ -7,7 +6,7 @@ Example usage:
                 <plugin>
                     <groupId>org.carlspring.maven</groupId>
                     <artifactId>derby-maven-plugin</artifactId>
-                    <version>1.5</version>
+                    <version>${version.derby.plugin}</version>
 
                     <executions>
                         <execution>
@@ -39,7 +38,7 @@ Usage of the run goal, configure the plugin outside of the "execution" scope as 
                 <plugin>
                     <groupId>org.carlspring.maven</groupId>
                     <artifactId>derby-maven-plugin</artifactId>
-                    <version>1.5</version>
+                    <version>${version.derby.plugin}</version>
                     <configuration>
                         <basedir>${project.build.directory}/derby</basedir>
                         <port>1527</port>
