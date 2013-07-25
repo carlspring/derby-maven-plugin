@@ -66,7 +66,7 @@ public class StopDerbyMojo
             }
             catch (SQLException e)
             {
-                getLog().info(e.getMessage());
+                getLog().error(e.getMessage());
                 // Apparently this prints out a bunch of stuff we're not currently interested in,
                 // we just want it to shutdown properly.
                 // Perhaps further handling might be required at a future point in time.
