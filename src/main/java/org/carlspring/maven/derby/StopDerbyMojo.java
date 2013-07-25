@@ -62,7 +62,7 @@ public class StopDerbyMojo
 
             try
             {
-                DriverManager.getConnection("jdbc:derby:;shutdown=true");
+                DriverManager.getConnection(getConnectionURLShutdown());
             }
             catch (SQLException e)
             {

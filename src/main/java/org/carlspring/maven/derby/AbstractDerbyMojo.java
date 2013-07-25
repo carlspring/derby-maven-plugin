@@ -72,7 +72,7 @@ public abstract class AbstractDerbyMojo
     /**
      * The username to use when shutting down the database.
      */
-    @Parameter(property = "derby.url.shutdown")
+    @Parameter(property = "derby.url.shutdown", defaultValue="jdbc:derby:;shutdown=true")
     String connectionURLShutdown;
 
     /**
