@@ -62,11 +62,11 @@ public class StopDerbyMojo
 
             try
             {
-                DriverManager.getConnection(getConnectionURL());
-                DriverManager.getConnection("jdbc:derby:;shutdown=true");
+                DriverManager.getConnection(getConnectionURLShutdown());
             }
             catch (SQLException e)
             {
+                getLog().error(e.getMessage());
                 // Apparently this prints out a bunch of stuff we're not currently interested in,
                 // we just want it to shutdown properly.
                 // Perhaps further handling might be required at a future point in time.
@@ -74,6 +74,7 @@ public class StopDerbyMojo
 
             server.shutdown();
 
+            // TODO: - investigate - isn't this done by server.shutdown() already?
             while (true)
             {
                 Thread.sleep(1000);
