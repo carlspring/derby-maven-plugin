@@ -5,7 +5,7 @@
 
     <groupId>org.carlspring.maven</groupId>
     <artifactId>derby-maven-plugin</artifactId>
-    <version>1.7-SNAPSHOT</version>
+    <version>1.7</version>
     <packaging>maven-plugin</packaging>
 
     <name>Maven Derby Plugin</name>
@@ -211,7 +211,7 @@
         <connection>scm:git:git@github.com:carlspring/derby-maven-plugin.git</connection>
         <url>scm:git:git@github.com:carlspring/derby-maven-plugin.git</url>
         <developerConnection>scm:git:git@github.com:carlspring/derby-maven-plugin.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>derby-maven-plugin-1.7</tag>
   </scm>
 
     <distributionManagement>
