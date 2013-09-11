@@ -16,6 +16,10 @@ package org.carlspring.maven.derby;
  * limitations under the License.
  */
 
+import java.sql.SQLException;
+
+import org.junit.Assert;
+
 /**
  * @author Jason Stiefel (jason@stiefel.io)
  */
@@ -49,6 +53,8 @@ public class RunDerbyMojoTest
         rt.start();
 
         Thread.sleep(3000);
+        Assert.assertFalse(runMojo.isSkip());
+        Assert.assertFalse(isDerbyUp(runMojo));
 
         System.out.println("Stopping the server ...");
         stopMojo.execute();
@@ -57,6 +63,35 @@ public class RunDerbyMojoTest
         assertTrue("Running thread does not report ended.", rt.ended);
         assertFalse(rt.isAlive());
 
+    }
+
+    public void testSkipMojo()
+            throws Exception
+    {
+        runMojo.setSkip(true);
+
+        RunningThread rt = new RunningThread(runMojo);
+        System.out.println("Starting the run thread ...");
+        rt.start();
+
+        Thread.sleep(3000);
+        Assert.assertTrue(runMojo.isSkip());
+        try
+        {
+            isDerbyUp(runMojo);
+            System.out.println("Stopping the server ...");
+            stopMojo.execute();
+
+            Thread.sleep(3000);
+            assertTrue("Running thread does not report ended.", rt.ended);
+            assertFalse(rt.isAlive());
+
+            Assert.fail("Derby should not have been started.");
+        }
+        catch (SQLException ignored)
+        {
+
+        }
     }
 
     class RunningThread extends Thread
