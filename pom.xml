@@ -31,6 +31,10 @@
             <name>Jason Stiefel</name>
             <email>jason@stiefel.io</email>
         </developer>
+        <developer>
+            <name>Denis N. Antonioli</name>
+            <email>denisa@sunrunhome.com</email>
+        </developer>
     </developers>
 
     <properties>
