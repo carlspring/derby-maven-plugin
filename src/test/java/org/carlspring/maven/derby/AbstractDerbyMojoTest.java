@@ -1,5 +1,8 @@
 package org.carlspring.maven.derby;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 /**
@@ -22,4 +25,9 @@ public abstract class AbstractDerbyMojoTest
         mojo.setPassword("derby");
     }
 
+    protected boolean isDerbyUp(AbstractDerbyMojo mojo)
+            throws SQLException
+    {
+        return DriverManager.getConnection(mojo.getConnectionURL() + ";create=true").isReadOnly();
+    }
 }

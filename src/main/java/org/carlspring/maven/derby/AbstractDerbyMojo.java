@@ -88,6 +88,12 @@ public abstract class AbstractDerbyMojo
     boolean debugStatements;
 
     /**
+     * Whether to bypass running Derby.
+     */
+    @Parameter(property = "derby.skip")
+    boolean skip;
+
+    /**
      * Shared {@link NetworkServerControl} instance for all mojos.
      */
     protected NetworkServerControl server;
@@ -104,6 +110,12 @@ public abstract class AbstractDerbyMojo
     public void execute()
             throws MojoExecutionException, MojoFailureException
     {
+        if ( skip )
+        {
+            getLog().info("Skipping Derby execution");
+            return;
+        }
+
         setupDerby();
 
         doExecute();
@@ -238,5 +250,16 @@ public abstract class AbstractDerbyMojo
     {
         this.debugStatements = debugStatements;
     }
+
+    public boolean isSkip()
+    {
+        return skip;
+    }
+
+    public void setSkip(boolean skip)
+    {
+        this.skip = skip;
+    }
+
 
 }
