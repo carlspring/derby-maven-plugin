@@ -26,8 +26,9 @@ import org.apache.maven.project.MavenProject;
 import java.net.InetAddress;
 
 /**
+ * @author Martin Todorov (carlspring@gmail.com)
  * @author Jason Stiefel (jason@stiefel.io)
- * @author mtodorov
+ * @author Denis N. Antonioli (denisa@sunrunhome.com)
  */
 public abstract class AbstractDerbyMojo
         extends AbstractMojo
@@ -110,9 +111,9 @@ public abstract class AbstractDerbyMojo
     public void execute()
             throws MojoExecutionException, MojoFailureException
     {
-        if ( skip )
+        if (skip)
         {
-            getLog().info("Skipping Derby execution");
+            getLog().info("Skipping Derby execution.");
             return;
         }
 
@@ -260,6 +261,5 @@ public abstract class AbstractDerbyMojo
     {
         this.skip = skip;
     }
-
 
 }

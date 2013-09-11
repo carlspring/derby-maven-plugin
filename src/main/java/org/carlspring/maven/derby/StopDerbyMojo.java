@@ -25,7 +25,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * @author mtodorov
+ * @author Martin Todorov (carlspring@gmail.com)
+ * @author Jason Stiefel (jason@stiefel.io)
+ * @author Denis N. Antonioli (denisa@sunrunhome.com)
  */
 @Mojo(name = "stop", requiresProject = false)
 public class StopDerbyMojo

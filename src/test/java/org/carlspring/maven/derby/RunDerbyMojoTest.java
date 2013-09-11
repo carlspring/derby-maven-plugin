@@ -22,6 +22,7 @@ import org.junit.Assert;
 
 /**
  * @author Jason Stiefel (jason@stiefel.io)
+ * @author Denis N. Antonioli (denisa@sunrunhome.com)
  */
 public class RunDerbyMojoTest
         extends AbstractDerbyMojoTest

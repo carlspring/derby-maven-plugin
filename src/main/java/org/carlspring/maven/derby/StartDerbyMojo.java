@@ -25,7 +25,8 @@ import java.io.PrintWriter;
 import java.net.BindException;
 
 /**
- * @author mtodorov
+ * @author Martin Todorov
+ * @author Jason Stiefel (jason@stiefel.io)
  */
 @Mojo(name = "start", requiresProject = false)
 public class StartDerbyMojo

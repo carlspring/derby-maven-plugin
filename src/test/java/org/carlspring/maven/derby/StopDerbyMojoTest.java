@@ -19,6 +19,7 @@ package org.carlspring.maven.derby;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
+ * @author Martin Todorov (carlspring@gmail.com)
  * @author Jason Stiefel (jason@stiefel.io)
  */
 public class StopDerbyMojoTest

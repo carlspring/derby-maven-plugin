@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 /**
- * @author jstiefel
+ * @author Jason Stiefel (jason@stiefel.io)
+ * @author Denis N. Antonioli (denisa@sunrunhome.com)
  * @since 6/11/12
  */
 public abstract class AbstractDerbyMojoTest
@@ -30,4 +31,5 @@ public abstract class AbstractDerbyMojoTest
     {
         return DriverManager.getConnection(mojo.getConnectionURL() + ";create=true").isReadOnly();
     }
+
 }

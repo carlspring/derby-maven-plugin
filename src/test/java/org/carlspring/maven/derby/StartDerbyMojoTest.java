@@ -23,7 +23,9 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Assert;
 
 /**
- * @author mtodorov
+ * @author Martin Todorov (carlspring@gmail.com)
+ * @author Jason Stiefel (jason@stiefel.io)
+ * @author Denis N. Antonioli (denisa@sunrunhome.com)
  */
 public class StartDerbyMojoTest
         extends AbstractDerbyMojoTest
