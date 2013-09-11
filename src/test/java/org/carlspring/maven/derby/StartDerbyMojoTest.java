@@ -16,8 +16,11 @@ package org.carlspring.maven.derby;
  * limitations under the License.
  */
 
+import java.sql.SQLException;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.junit.Assert;
 
 /**
  * @author mtodorov
@@ -43,13 +46,38 @@ public class StartDerbyMojoTest
     }
 
     public void testMojo()
-            throws MojoExecutionException, MojoFailureException, InterruptedException
+            throws MojoExecutionException, MojoFailureException, InterruptedException, SQLException
     {
         startMojo.execute();
+        Assert.assertFalse(startMojo.isSkip());
+        Assert.assertFalse(isDerbyUp(startMojo));
 
         Thread.sleep(5000);
 
         stopMojo.execute();
+    }
+
+    public void testSkipMojo()
+            throws MojoExecutionException, MojoFailureException, InterruptedException
+    {
+        startMojo.setSkip(true);
+
+        startMojo.execute();
+        Assert.assertTrue(startMojo.isSkip());
+        try
+        {
+            isDerbyUp(startMojo);
+
+            Thread.sleep(5000);
+
+            stopMojo.execute();
+
+            Assert.fail("Derby should not have been started.");
+        }
+        catch(SQLException ignored)
+        {
+
+        }
     }
 
 }

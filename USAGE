@@ -69,3 +69,14 @@ Usage of the run goal, configure the plugin outside of the "execution" scope as 
 
     # mvn derby:stop
     Sends a stop message to the configured server instance.
+
+The maven property derby.skip, if set to true, will prevent the plugin from launching derby. It can also be set with
+    <plugin>
+        <groupId>org.carlspring.maven</groupId>
+        <artifactId>derby-maven-plugin</artifactId>
+        <version>${version.derby.plugin}</version>
+        <configuration>
+            <skip>true</skip>
+        </configuration>
+        ...
+     </plugin>
