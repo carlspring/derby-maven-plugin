@@ -8,6 +8,27 @@ Example usage:
                     <artifactId>derby-maven-plugin</artifactId>
                     <version>${version.derby.plugin}</version>
 
+                    <configuration>
+                        <!-- Optional, defaults to ${project.build.directory}/derby-->
+                        <derbyHome>${project.build.directory}/derby</derbyHome>
+                        <!-- Optional, defaults to 1527 -->
+                        <port>1527</port>
+                        <!-- Optional, the username to use when authenticating.-->
+                        <username>derby</username>
+                        <!--Optional, the password to use when authenticating.-->
+                        <password>derby</password>
+                        <!--Optional, the absolute class name of the driver.-->
+                        <driver></driver>
+                        <!--Optional, the URL to use when connecting.-->
+                        <connectionURL></connectionURL>
+                        <!--Optional, the username to use when shutting down the database.-->
+                        <connectionURLShutdown>jdbc:derby:;shutdown=true</connectionURLShutdown>
+                        <!--Optional, whether to run Derby with debugging statements.-->
+                        <debugStatements>true</debugStatements>
+                        <!-- Whether to bypass running Derby.-->
+                        <skip>false</skip>
+                    </configuration>
+
                     <executions>
                         <execution>
                             <id>start-derby</id>
@@ -16,12 +37,6 @@ Example usage:
                                 <goal>start</goal>
                             </goals>
 
-                            <configuration>
-                                <!-- Optional, defaults to ${project.build.directory}/derby-->
-                                <derbyHome>${project.build.directory}/derby</derbyHome>
-                                <!-- Optional, defaults to 1527 -->
-                                <port>1527</port>
-                            </configuration>
                         </execution>
                     </executions>
 
