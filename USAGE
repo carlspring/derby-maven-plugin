@@ -18,9 +18,9 @@ Example usage:
                         <!--Optional, the password to use when authenticating.-->
                         <password>derby</password>
                         <!--Optional, the absolute class name of the driver.-->
-                        <driver></driver>
+                        <!--<driver></driver>-->
                         <!--Optional, the URL to use when connecting.-->
-                        <connectionURL></connectionURL>
+                        <!--<connectionURL></connectionURL>-->
                         <!--Optional, the username to use when shutting down the database.-->
                         <connectionURLShutdown>jdbc:derby:;shutdown=true</connectionURLShutdown>
                         <!--Optional, whether to run Derby with debugging statements.-->
