@@ -16,6 +16,8 @@ package org.carlspring.maven.derby;
  * limitations under the License.
  */
 
+import java.io.File;
+
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
@@ -51,6 +53,18 @@ public class StopDerbyMojoTest
         }
         catch (MojoExecutionException e)
         {
+        }
+
+        final File dbLock = new File(stopMojo.getDerbyHome() + "/db", "db.lck");
+        if (dbLock.exists())
+        {
+            fail("Failed to remove lock: " + dbLock.getAbsolutePath());
+        }
+
+        final File dbexLock = new File(stopMojo.getDerbyHome() + "/db", "dbex.lck");
+        if (dbexLock.exists())
+        {
+            fail("Failed to remove lock: " + dbexLock.getAbsolutePath());
         }
     }
 

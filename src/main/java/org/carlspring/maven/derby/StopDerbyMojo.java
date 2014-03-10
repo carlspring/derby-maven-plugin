@@ -21,6 +21,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
+import java.io.File;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -92,11 +93,36 @@ public class StopDerbyMojo
             }
 
             System.getProperties().remove("derby.system.home");
+
+            removeLocks();
         }
         catch (Exception e)
         {
             throw new MojoExecutionException(e.getMessage(), e);
         }
+    }
+
+    private void removeLocks()
+    {
+        getLog().info("Removing locks...");
+
+        final File dbLock = new File(getDerbyHome() + "/db", "db.lck");
+        if (dbLock.exists())
+        {
+            getLog().debug(" -> Removing " + dbLock.getAbsolutePath());
+            //noinspection ResultOfMethodCallIgnored
+            dbLock.delete();
+        }
+
+        final File dbexLock = new File(getDerbyHome() + "/db", "dbex.lck");
+        if (dbexLock.exists())
+        {
+            getLog().debug(" -> Removing " + dbexLock.getAbsolutePath());
+            //noinspection ResultOfMethodCallIgnored
+            dbexLock.delete();
+        }
+
+        getLog().info("Locks removed.");
     }
 
     public boolean isFailIfNotRunning()
