@@ -21,7 +21,7 @@ Example usage:
                         <!--<driver></driver>-->
                         <!-- Optional, the URL to use when connecting.-->
                         <!--<connectionURL></connectionURL>-->
-                        <!-- Optional, the username to use when shutting down the database.-->
+                        <!-- Optional, the URL to use when shutting down the database.-->
                         <connectionURLShutdown>jdbc:derby:;shutdown=true</connectionURLShutdown>
                         <!-- Optional, whether to run Derby with debugging statements.-->
                         <debugStatements>true</debugStatements>

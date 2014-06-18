@@ -37,9 +37,6 @@ public abstract class AbstractDerbyMojo
     @Parameter(readonly = true, property = "project", required = true)
     public MavenProject project;
 
-    @Parameter(property = "basedir")
-    public String basedir;
-
     /**
      * The port to start Derby on.
      */
@@ -71,7 +68,7 @@ public abstract class AbstractDerbyMojo
     String connectionURL;
 
     /**
-     * The username to use when shutting down the database.
+     * The URL to use when shutting down the database.
      */
     @Parameter(property = "derby.url.shutdown", defaultValue="jdbc:derby:;shutdown=true")
     String connectionURLShutdown;
@@ -84,6 +81,7 @@ public abstract class AbstractDerbyMojo
 
     /**
      * Whether to run Derby with debugging statements.
+     * Set this to false if you don't want Derby to log SQL statements into derby.log.
      */
     @Parameter(property = "derby.debug", defaultValue = "true")
     boolean debugStatements;
@@ -220,16 +218,6 @@ public abstract class AbstractDerbyMojo
     public void setDriver(String driver)
     {
         this.driver = driver;
-    }
-
-    public String getBasedir()
-    {
-        return basedir;
-    }
-
-    public void setBasedir(String basedir)
-    {
-        this.basedir = basedir;
     }
 
     public String getDerbyHome()
