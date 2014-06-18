@@ -37,9 +37,6 @@ public abstract class AbstractDerbyMojo
     @Parameter(readonly = true, property = "project", required = true)
     public MavenProject project;
 
-    @Parameter(property = "basedir")
-    public String basedir;
-
     /**
      * The port to start Derby on.
      */
@@ -220,16 +217,6 @@ public abstract class AbstractDerbyMojo
     public void setDriver(String driver)
     {
         this.driver = driver;
-    }
-
-    public String getBasedir()
-    {
-        return basedir;
-    }
-
-    public void setBasedir(String basedir)
-    {
-        this.basedir = basedir;
     }
 
     public String getDerbyHome()
