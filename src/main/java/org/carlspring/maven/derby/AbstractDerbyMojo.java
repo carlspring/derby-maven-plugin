@@ -81,6 +81,7 @@ public abstract class AbstractDerbyMojo
 
     /**
      * Whether to run Derby with debugging statements.
+     * Set this to false if you don't want Derby to log SQL statements into derby.log.
      */
     @Parameter(property = "derby.debug", defaultValue = "true")
     boolean debugStatements;
