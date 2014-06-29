@@ -87,10 +87,10 @@ public class StopDerbyMojo
             // TODO: - investigate - isn't this done by server.shutdown() already?
             while (true)
             {
-                Thread.sleep(1000);
                 try
                 {
                     server.ping();
+                    Thread.sleep(1000);
                 }
                 catch (Exception e)
                 {
