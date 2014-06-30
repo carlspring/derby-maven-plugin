@@ -90,13 +90,13 @@ public class StopDerbyMojo
                 try
                 {
                     server.ping();
-                    Thread.sleep(1000);
                 }
                 catch (Exception e)
                 {
                     getLog().info("Derby has stopped!");
                     break;
                 }
+                Thread.sleep(1000);
             }
 
             System.getProperties().remove("derby.system.home");
