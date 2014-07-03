@@ -35,23 +35,28 @@ public class StopDerbyMojoTest
         super.setUp();
 
         stopMojo = (StopDerbyMojo) lookupMojo("stop", POM_PLUGIN);
-
         configureMojo(stopMojo);
-
-        stopMojo.setFailIfNotRunning(true);
     }
 
-    public void testMojo()
+    public void testFailIfNotRunningAndShouldFail()
             throws Exception
     {
+        stopMojo.setFailIfNotRunning(true);
         try
         {
             stopMojo.execute();
             fail("The failIfNotRunning attribute did not cause an exception as expected");
         }
-        catch (MojoExecutionException e)
+        catch (MojoExecutionException ignored)
         {
         }
+    }
+
+    public void testFailIfNotRunningAndShouldNotFail()
+            throws Exception
+    {
+        stopMojo.setFailIfNotRunning(false);
+        stopMojo.execute();
     }
 
 }
