@@ -21,6 +21,7 @@ public abstract class AbstractDerbyMojoTest
     {
         mojo.setDerbyHome("target/derby");
         mojo.setConnectionURL("jdbc:derby://localhost:1527/db;user=derby;password=derby");
+        mojo.setConnectionURLShutdown("jdbc:derby:;shutdown=true");
         mojo.setPort(1527);
         mojo.setUsername("derby");
         mojo.setPassword("derby");
