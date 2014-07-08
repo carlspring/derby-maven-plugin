@@ -19,7 +19,7 @@ public abstract class AbstractDerbyMojoTest
 
     protected void configureMojo(AbstractDerbyMojo mojo)
     {
-        mojo.setDerbyHome(System.getProperty("basedir") + "/target/derby");
+        mojo.setDerbyHome("target/derby");
         mojo.setConnectionURL("jdbc:derby://localhost:1527/db;user=derby;password=derby");
         mojo.setPort(1527);
         mojo.setUsername("derby");
