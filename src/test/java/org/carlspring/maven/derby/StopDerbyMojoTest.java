@@ -34,8 +34,7 @@ public class StopDerbyMojoTest
     {
         super.setUp();
 
-        stopMojo = (StopDerbyMojo) lookupMojo("stop", POM_PLUGIN);
-        configureMojo(stopMojo);
+        stopMojo = (StopDerbyMojo) lookupConfiguredMojo("stop", POM_PLUGIN);
     }
 
     public void testFailIfNotRunningAndShouldFail()

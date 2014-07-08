@@ -38,10 +38,8 @@ public class RunDerbyMojoTest
     {
         super.setUp();
 
-        runMojo = (RunDerbyMojo) lookupMojo("run", POM_PLUGIN);
-        configureMojo(runMojo);
-        stopMojo = (StopDerbyMojo) lookupMojo("stop", POM_PLUGIN);
-        configureMojo(stopMojo);
+        runMojo = (RunDerbyMojo) lookupConfiguredMojo("run", POM_PLUGIN);
+        stopMojo = (StopDerbyMojo) lookupConfiguredMojo("stop", POM_PLUGIN);
         stopMojo.setFailIfNotRunning(true);
     }
 

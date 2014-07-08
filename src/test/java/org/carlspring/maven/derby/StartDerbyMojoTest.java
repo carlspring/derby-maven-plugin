@@ -40,11 +40,8 @@ public class StartDerbyMojoTest
     {
         super.setUp();
 
-        startMojo = (StartDerbyMojo) lookupMojo("start", POM_PLUGIN);
-        configureMojo(startMojo);
-
-        stopMojo = (StopDerbyMojo) lookupMojo("stop", POM_PLUGIN);
-        configureMojo(stopMojo);
+        startMojo = (StartDerbyMojo) lookupConfiguredMojo("start", POM_PLUGIN);
+        stopMojo = (StopDerbyMojo) lookupConfiguredMojo("stop", POM_PLUGIN);
     }
 
     public void testMojo()
