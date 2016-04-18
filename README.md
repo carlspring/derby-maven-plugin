@@ -8,3 +8,6 @@ Usage
 * [USAGE](https://github.com/carlspring/derby-maven-plugin/blob/master/USAGE)
 * External links:
  * [REST test add integration tests](http://nigel-eke.com/unit-integration-testing-rest-services/rest-test-add-integration-tests/)
+
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.carlspring.maven/derby-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.carlspring.maven/derby-maven-plugin)
