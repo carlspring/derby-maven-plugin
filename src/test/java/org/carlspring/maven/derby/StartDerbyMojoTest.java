@@ -44,39 +44,46 @@ public class StartDerbyMojoTest
         stopMojo = (StopDerbyMojo) lookupConfiguredMojo("stop", POM_PLUGIN);
     }
 
-    public void testMojo()
+    public void testMojoDefaultSettings()
+    {
+        Assert.assertFalse(startMojo.isSkip());
+    }
+    
+    public void testNormalExecution()
             throws MojoExecutionException, MojoFailureException, InterruptedException, SQLException
     {
         startMojo.execute();
-        Assert.assertFalse(startMojo.isSkip());
-        Assert.assertFalse(isDerbyUp(startMojo));
+        Thread.sleep(CONNECTION_DELAY);
 
-        Thread.sleep(5000);
+        assertDerbyIsUp();
 
-        stopMojo.execute();
+        shutdownDerby();
     }
 
-    public void testSkipMojo()
+    public void testSkipOption()
             throws MojoExecutionException, MojoFailureException, InterruptedException
     {
         startMojo.setSkip(true);
 
         startMojo.execute();
-        Assert.assertTrue(startMojo.isSkip());
+        Thread.sleep(CONNECTION_DELAY);
+
         try
         {
-            isDerbyUp(startMojo);
+            connectToDerby();  // should fail because Derby startup is skipped
 
-            Thread.sleep(5000);
-
-            stopMojo.execute();
-
+            shutdownDerby();
             Assert.fail("Derby should not have been started.");
         }
         catch(SQLException ignored)
         {
-
+            // expected
         }
+    }
+
+    private void shutdownDerby() 
+            throws InterruptedException, MojoExecutionException, MojoFailureException {
+        stopMojo.execute();
     }
 
 }

@@ -18,6 +18,8 @@ package org.carlspring.maven.derby;
 
 import java.sql.SQLException;
 
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Assert;
 
 /**
@@ -29,7 +31,6 @@ public class RunDerbyMojoTest
 {
 
     RunDerbyMojo runMojo;
-
     StopDerbyMojo stopMojo;
 
 
@@ -43,54 +44,57 @@ public class RunDerbyMojoTest
         stopMojo.setFailIfNotRunning(true);
     }
 
-    public void testMojo()
+    public void testMojoDefaultSettings()
+    {
+        Assert.assertFalse(runMojo.isSkip());
+    }
+    
+    public void testNormalExecution()
             throws Exception
     {
+        RunningThread rt = startDerbyInBackground(runMojo);
 
-        RunningThread rt = new RunningThread(runMojo);
-        System.out.println("Starting the run thread ...");
-        rt.start();
+        Thread.sleep(CONNECTION_DELAY);
+        assertDerbyIsUp();
 
-        Thread.sleep(3000);
-        Assert.assertFalse(runMojo.isSkip());
-        Assert.assertFalse(isDerbyUp(runMojo));
-
-        System.out.println("Stopping the server ...");
         stopMojo.execute();
 
-        Thread.sleep(3000);
+        Thread.sleep(CONNECTION_DELAY);
         assertTrue("Running thread does not report ended.", rt.ended);
-        assertFalse(rt.isAlive());
-
+        assertFalse("Running thread is still alive.", rt.isAlive());
     }
 
-    public void testSkipMojo()
+    public void testSkipOption()
             throws Exception
     {
         runMojo.setSkip(true);
 
-        RunningThread rt = new RunningThread(runMojo);
-        System.out.println("Starting the run thread ...");
-        rt.start();
-
+        startDerbyInBackground(runMojo);
         Thread.sleep(3000);
-        Assert.assertTrue(runMojo.isSkip());
+
         try
         {
-            isDerbyUp(runMojo);
-            System.out.println("Stopping the server ...");
-            stopMojo.execute();
+            connectToDerby();  // should fail because Derby startup is skipped
 
-            Thread.sleep(3000);
-            assertTrue("Running thread does not report ended.", rt.ended);
-            assertFalse(rt.isAlive());
-
+            shutdownDerby();
             Assert.fail("Derby should not have been started.");
         }
         catch (SQLException ignored)
         {
-
+            // expected
         }
+    }
+
+    private RunningThread startDerbyInBackground(RunDerbyMojo runMojo) {
+        RunningThread rt = new RunningThread(runMojo);
+        System.out.println("Starting the run thread ...");
+        rt.start();
+        return rt;
+    }
+
+    private void shutdownDerby() 
+            throws InterruptedException, MojoExecutionException, MojoFailureException {
+        stopMojo.execute();
     }
 
     class RunningThread extends Thread
