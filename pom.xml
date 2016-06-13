@@ -8,7 +8,7 @@
     <version>1.11-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
-    <name>Maven Derby Plugin</name>
+    <name>Derby Maven Plugin</name>
     <description>A plugin to start/stop a network serving Derby database.</description>
 
     <url>https://github.com/carlspring/derby-maven-plugin</url>
