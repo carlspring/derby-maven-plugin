@@ -90,6 +90,7 @@ public class StopDerbyMojo
                 try
                 {
                     server.ping();
+                    Thread.sleep(1000);
                 }
                 catch (Exception e)
                 {
