@@ -11,3 +11,4 @@ Usage
 
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.carlspring.maven/derby-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.carlspring.maven/derby-maven-plugin)
+[![Known Vulnerabilities](https://snyk.io/test/github/carlspring/derby-maven-plugin/badge.svg)](https://snyk.io/test/github/carlspring/derby-maven-plugin/)
