@@ -40,7 +40,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <version.derby>10.10.1.1</version.derby>
+        <version.derby>10.14.2.0</version.derby>
         <version.maven>3.0.5</version.maven>
         <version.derby-maven-plugin>${project.version}</version.derby-maven-plugin>
     </properties>
